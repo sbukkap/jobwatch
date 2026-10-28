@@ -1,0 +1,100 @@
+# jobwatch config. Edit freely; changes take effect on the next run.
+#
+# Company slugs are the name in the board URL:
+#   Greenhouse: boards.greenhouse.io/<slug>    or job-boards.greenhouse.io/<slug>
+#   Lever:      jobs.lever.co/<slug>
+#   Ashby:      jobs.ashbyhq.com/<slug>
+# Find them by opening a company's careers page and clicking any job posting.
+# Run `python jobwatch.py --check` after editing to confirm every slug resolves.
+# A newly added company is seeded silently on its first run, so you won't get
+# a flood of its existing jobs, only ones posted after that.
+
+companies:
+  greenhouse:
+    - stripe
+    - airbnb
+    - figma
+    - discord
+    - robinhood
+    - databricks
+    - cloudflare
+    - gitlab
+    - dropbox
+    - pinterest
+    - reddit
+    - instacart
+    - lyft
+    - asana
+    - twilio
+    - datadog
+    - mongodb
+    - samsara
+    - okta
+    - affirm
+    - chime
+    - roblox
+    - duolingo
+    - brex
+    - gusto
+  lever:
+    - palantir
+    - spotify
+    - plaid
+    - zoox
+  ashby:
+    - notion
+    - ramp
+    - openai
+    - linear
+    - vercel
+    - supabase
+    - posthog
+    - deel
+
+filters:
+  # Regexes, case-insensitive. A job must match at least one title_include.
+  title_include:
+    - 'software (engineer|developer|development engineer)'
+    - '\bSDE\b'
+    - '\bSWE\b'
+    - 'front[- ]?end'
+    - 'full[- ]?stack'
+    - 'web (engineer|developer)'
+    - 'product engineer'
+    - 'new grad|university grad|early career|entry[- ]level|graduate'
+
+  # Drop anything senior, managerial, or internship.
+  title_exclude:
+    - '\bsenior\b|\bsr\.?\b'
+    - '\bstaff\b|\bprincipal\b|\blead\b|\bdistinguished\b'
+    - 'manager|director|head of|\bvp\b|architect'
+    - '\b(III|IV|V)\b|\b[3-9]\b'
+    - '\bintern(ship)?\b|co-?op'
+
+  # Keep jobs whose location mentions the US, a US remote option, or a major
+  # US tech city. Jobs with an empty location are kept.
+  location_include:
+    - 'united states|\bUSA?\b|\bU\.S\.'
+    - 'remote'
+    - 'new york|nyc|san francisco|bay area|seattle|bellevue|redmond|austin|boston|chicago|los angeles|denver|atlanta|san jose|palo alto|mountain view|menlo park|sunnyvale|santa clara|san mateo|washington,? d\.?c|arlington|raleigh|pittsburgh|portland|salt lake|phoenix|dallas|houston|miami|philadelphia|indianapolis|minneapolis|columbus|detroit|san diego|irvine|nashville'
+
+  # "Remote" also matches e.g. "Remote - Canada". Drop those unless the
+  # location also names the US (location_us_override).
+  location_exclude:
+    - 'canada|toronto|vancouver|united kingdom|\bUK\b|london|ireland|dublin|india|bangalore|bengaluru|hyderabad|germany|berlin|france|paris|netherlands|amsterdam|spain|poland|brazil|mexico|singapore|japan|tokyo|australia|sydney|israel|tel aviv|europe|emea|apac|latam'
+  location_us_override:
+    - 'united states|\bUSA?\b|\bU\.S\.'
+
+  # Hard drop: roles you legally can't hold on OPT.
+  description_exclude:
+    - 'u\.?s\.? citizen(ship)? (is |are )?(required|only)'
+    - 'must be a u\.?s\.? citizen'
+    - 'security clearance|active clearance|\bTS/SCI\b|secret clearance|clearance (is )?required'
+    - 'ITAR'
+
+  # Keep these but flag them in the alert so you can decide quickly.
+  description_warn:
+    "says no visa sponsorship":
+      - '(not|unable to|cannot|can.t|won.t|will not|does not|do not) (to )?(provide |offer )?(visa )?sponsor'
+      - 'without (the need for )?(current or future )?(visa )?sponsorship'
+      - 'no (visa )?sponsorship'
