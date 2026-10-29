@@ -1,6 +1,6 @@
 # jobwatch
 
-Polls company job boards on Greenhouse, Lever and Ashby every 30 minutes and sends
+Polls company job boards on Greenhouse, Lever, Ashby and Workday every 30 minutes and sends
 newly posted roles that match your filters to Discord and/or Telegram. Runs free
 on GitHub Actions.
 
@@ -30,11 +30,25 @@ on GitHub Actions.
 4. **Run it once** from the *Actions* tab → *jobwatch* → *Run workflow*. The first
    run only seeds `seen.json` (no alerts). After that it runs every 30 minutes.
 
+## Seeing listings yourself
+
+```
+python jobwatch.py --list                 # all open matching jobs, newest first
+python jobwatch.py --list --hours 8       # posted in the last 8 hours
+python jobwatch.py --list --only nvidia   # one or more companies (comma-separated)
+```
+
+Workday sites only report the posting *day*, so their jobs show "today" / "2d ago"
+instead of hours. Alerts are still fast: jobwatch notices a new Workday job on the
+first run after it appears.
+
 ## Tuning
 
 Everything is in `config.yaml`:
-- `companies`: add your targets, prioritizing ones with a record of sponsoring (MyVisaJobs / H1BGrader) and that use E-Verify.
+- `companies`: add your targets. Workday companies go under `workday:` as
+  `name: <tenant>.wdN.myworkdayjobs.com/<site>`; copy that from the URL of any job on their careers site, prioritizing ones with a record of sponsoring (MyVisaJobs / H1BGrader) and that use E-Verify.
 - `title_include` / `title_exclude`: regexes on the job title.
+- `workday_search`: search terms sent to Workday sites (they're searched, not fully listed).
 - `location_include` / `location_exclude`: regexes on the location string.
 - `description_exclude`: hard drop. `description_warn`: keep but flag.
 
@@ -42,8 +56,10 @@ Preview what would match without sending anything: `python jobwatch.py --dry-run
 
 ## Notes
 
-- Big companies (Amazon, Google, Microsoft, Meta, Apple) run their own career sites,
-  not these ATSes. Use the job alerts on their own sites for those.
+- Amazon, Google, Microsoft, Meta and Apple run their own career systems, not
+  these ATSes. Use the job alerts on their own sites for those.
+- Workday has no official public API; jobwatch uses the JSON endpoint behind every
+  Workday careers page. If a company moves to a new Workday address, `--check` will show it failing.
 - GitHub can delay scheduled runs by several minutes at busy times, and pauses
   schedules on repos with no activity for 60 days. If alerts stop, check the Actions tab.
 - `seen.json` is committed back after each run; job IDs not seen for 60 days are pruned.

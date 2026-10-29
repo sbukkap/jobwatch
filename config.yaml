@@ -1,6 +1,6 @@
 # jobwatch config. Edit freely; changes take effect on the next run.
 #
-# Company slugs are the name in the board URL:
+# Company slugs (Greenhouse/Lever/Ashby) are the name in the board URL:
 #   Greenhouse: boards.greenhouse.io/<slug>    or job-boards.greenhouse.io/<slug>
 #   Lever:      jobs.lever.co/<slug>
 #   Ashby:      jobs.ashbyhq.com/<slug>
@@ -11,45 +11,89 @@
 
 companies:
   greenhouse:
+    # big / well-known
     - stripe
     - airbnb
+    - coinbase
+    - doordashusa
+    - anthropic
+    - scaleai
+    - databricks
+    - cloudflare
+    - twitch
     - figma
     - discord
     - robinhood
-    - databricks
-    - cloudflare
-    - gitlab
-    - dropbox
     - pinterest
     - reddit
     - instacart
     - lyft
-    - asana
-    - twilio
+    - dropbox
     - datadog
     - mongodb
-    - samsara
     - okta
+    - zscaler
+    - verkada
+    - samsara
+    - grammarly
+    - gleanwork
+    - gitlab
+    - asana
+    - twilio
     - affirm
     - chime
     - roblox
     - duolingo
     - brex
     - gusto
+    - planetscale
+    - yext
+    - idme
   lever:
     - palantir
     - spotify
     - plaid
     - zoox
+    - sep            # Software Engineering Professionals, Carmel/Westfield, Indiana
   ashby:
+    - openai
     - notion
     - ramp
-    - openai
+    - perplexity
+    - replit
+    - sentry
+    - zapier
+    - amplitude
+    - whatnot
+    - harvey
     - linear
     - vercel
     - supabase
     - posthog
+    - openrouter
     - deel
+  # Workday: name: careers-site URL (open a job on their site; the URL starts
+  # with <tenant>.wdN.myworkdayjobs.com/<site>). The /en-US part is optional.
+  workday:
+    nvidia: nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite
+    salesforce: salesforce.wd12.myworkdayjobs.com/External_Career_Site
+    adobe: adobe.wd5.myworkdayjobs.com/external_experienced
+    intel: intel.wd1.myworkdayjobs.com/External
+    qualcomm: qualcomm.wd12.myworkdayjobs.com/External
+    cisco: cisco.wd5.myworkdayjobs.com/Cisco_Careers
+    capitalone: capitalone.wd12.myworkdayjobs.com/Capital_One
+    paypal: paypal.wd1.myworkdayjobs.com/jobs
+    mastercard: mastercard.wd1.myworkdayjobs.com/CorporateCareers
+    fidelity: fmr.wd1.myworkdayjobs.com/FidelityCareers
+    walmart: walmart.wd5.myworkdayjobs.com/WalmartExternal
+    disney: disney.wd5.myworkdayjobs.com/disneycareer
+    snap: snapchat.wd1.myworkdayjobs.com/snap
+    zillow: zillow.wd5.myworkdayjobs.com/Zillow_Group_External
+    autodesk: autodesk.wd1.myworkdayjobs.com/Ext
+    crowdstrike: crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers
+    redhat: redhat.wd5.myworkdayjobs.com/Jobs
+    boeing: boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS
+    lilly: lilly.wd5.myworkdayjobs.com/LLY      # Eli Lilly, Indianapolis
 
 filters:
   # Regexes, case-insensitive. A job must match at least one title_include.
@@ -70,6 +114,15 @@ filters:
     - 'manager|director|head of|\bvp\b|architect'
     - '\b(III|IV|V)\b|\b[3-9]\b'
     - '\bintern(ship)?\b|co-?op'
+    - '\b(SMTS|LMTS|PMTS)\b'          # Salesforce senior levels
+
+  # Workday sites are searched (not fully listed), so these terms decide what
+  # gets fetched from them. title_include still applies afterwards.
+  workday_search:
+    - 'software engineer'
+    - 'software developer'
+    - 'frontend'
+    - 'full stack'
 
   # Keep jobs whose location mentions the US, a US remote option, or a major
   # US tech city. Jobs with an empty location are kept.
