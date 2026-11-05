@@ -35,7 +35,7 @@ companies:
     - zscaler
     - verkada
     - samsara
-    - grammarly
+    # - grammarly      # 404: board moved (rebranded to Superhuman?)
     - gleanwork
     - gitlab
     - asana
@@ -52,7 +52,7 @@ companies:
   lever:
     - palantir
     - spotify
-    - plaid
+    # - plaid          # 404: no longer on Lever
     - zoox
     - sep            # Software Engineering Professionals, Carmel/Westfield, Indiana
   ashby:
@@ -64,7 +64,7 @@ companies:
     - sentry
     - zapier
     - amplitude
-    - whatnot
+    # - whatnot        # 404: board name changed
     - harvey
     - linear
     - vercel
@@ -80,6 +80,8 @@ companies:
     adobe: adobe.wd5.myworkdayjobs.com/external_experienced
     intel: intel.wd1.myworkdayjobs.com/External
     qualcomm: qualcomm.wd12.myworkdayjobs.com/External
+    visa: visa.wd5.myworkdayjobs.com/Visa
+    expedia: expedia.wd108.myworkdayjobs.com/search
     cisco: cisco.wd5.myworkdayjobs.com/Cisco_Careers
     capitalone: capitalone.wd12.myworkdayjobs.com/Capital_One
     paypal: paypal.wd1.myworkdayjobs.com/jobs
